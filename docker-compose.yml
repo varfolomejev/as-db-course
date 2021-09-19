@@ -1,0 +1,30 @@
+version: '3' 
+services:
+  mysql-workbench:
+    platform: linux/amd64
+    image: linuxserver/mysql-workbench
+    container_name: mysql-workbench
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    # volumes:
+    #   - /path/to/config:/config
+    ports:
+      - 3000:3000
+    cap_add:
+      - IPC_LOCK
+    # restart: unless-stopped
+    networks: 
+      - mysql
+  mysql:
+    platform: linux/amd64
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    networks: 
+      - mysql
+
+networks: 
+  mysql:
+    driver: bridge
